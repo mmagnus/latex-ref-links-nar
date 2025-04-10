@@ -5,7 +5,7 @@ Briefly, the Python script to convert your bib file into NAR required bib format
 
 Take:
 
-```
+```bibtex
 @Article{Magnus22,
   author = {Magnus, M.},
   title = {rna-tools.online: a Swiss army knife for {RNA 3D} structure modeling},
@@ -19,7 +19,7 @@ Take:
 }
 ```
 and covert into:
-```
+```bibtex
 @Article{Magnus22,
   author = {Magnus, M.},
   title = {rna-tools.online: a Swiss army knife for {RNA 3D} structure modeling},
