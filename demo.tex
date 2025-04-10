@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage{natbib}
+\usepackage[pdftex,
+colorlinks=true, citecolor=black, urlcolor=blue ]{hyperref}
+%makes the links show up in color, rather than in a box
+%color of the in-text citation numbers
+%color of the url links
+\setlength\topmargin{0in}
+\setlength\headheight{0in}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{gray!10},
+  columns=fullflexible,
+}
+
+\setlength\headsep{0in}
+\setlength\textheight{8.5in}
+\setlength\textwidth{6.5in}
+\setlength\oddsidemargin{0in}
+\setlength\evensidemargin{0in}
+\setlength{\parskip}{0.1 in}
+\setlength{\parindent}{0.0 in}
+\bibliographystyle{unsrt}
+\begin{document}
+\title{Example of hyperlinks in References list}
+\author{Gary Benson, Marcin Magnus}
+\maketitle
+\begin{abstract}
+This example shows DOI, PubMed, and PubMedCentral links in the reference list.
+The latex file uses the {\bf hyperref} package and the bibtex file has the links
+encoded in a {\bf note} in each bibtex item. The latex file and the bibtex file
+are shown at the end.
+
+The function \texttt{process\_bibtex\_file(text)} extracts all \texttt{@Article\{\ldots\}} entries from the input BibTeX file and processes each one using \texttt{process\_bibtex\_entry()}. The \texttt{process\_bibtex\_entry(entry)} function uses regular expressions to locate fields for \texttt{doi}, \texttt{pmid}, and \texttt{pmcid} within each entry.
+
+These identifiers are then formatted into LaTeX \texttt{\textbackslash href\{\}} links compatible with the \texttt{hyperref} package, using the \texttt{format\_note()} function. The formatted links are inserted into the \texttt{note} field of the BibTeX entry. If a \texttt{note} field is already present, it is replaced; otherwise, a new \texttt{note} field is added before the closing brace of the entry.
+
+\section*{BibTeX File}
+
+In each of the items below, links are listed in the \texttt{note=\{\}}. The \texttt{\textbackslash href} indicates a link, the first \texttt{\{\}} contains the URL, and the second \texttt{\{\}} contains the text visible in your reference list.
+
+\begin{itemize}
+  \item \textbf{A DOI link} looks like this. The ``\texttt{http://dx.doi.org/}'' always goes before the DOI number:
+  
+  \begin{verbatim}
+  [doi:
+  \href{http://dx.doi.org/10.1093/bioinformatics/bth037}
+       {doi:10.1093/bioinformatics/bth037}]
+  \end{verbatim}
+
+  \item \textbf{A PMC link} looks like this. The ``\texttt{http://www.ncbi.nlm.nih.gov/pmc/articles/}'' always goes before the PMC number:
+
+  \begin{verbatim}
+  [PubMed Central:
+  \href{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC528961}
+       {PMC528961}]
+  \end{verbatim}
+
+  \item \textbf{A PubMed abstract link} looks like this. The ``\texttt{http://www.ncbi.nlm.nih.gov/pubmed/}'' always goes before the PMID number:
+
+  \begin{verbatim}
+  [PubMed:
+  \href{http://www.ncbi.nlm.nih.gov/pubmed/15290755}
+       {PMID:15290755}]
+  \end{verbatim}
+\end{itemize}
+
+\bigskip
+
+\section*{Example BibTeX Entry with Hyperlinks in the \texttt{note} Field}
+
+The following BibTeX entry includes PubMed, PMC, and DOI links in the \texttt{note} field using the \texttt{\textbackslash href\{\}} command from the \texttt{hyperref} package.
+
+\begin{lstlisting}
+@Article{Magnus22,
+  author =       {Magnus, M.},
+  title =        {rna-tools.online: a Swiss army knife for {RNA 3D} structure modeling},
+  journal =      {NAR},
+  year =         2022,
+  volume =       50,
+  pages =        {W657--W662},
+
+  note = {[PubMed:\href{https://www.ncbi.nlm.nih.gov/pubmed/35580057}{35580057}]
+          [PubMed Central:\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9252763}{PMC9252763}]
+          [doi:\href{https://doi.org/10.1093/nar/gkac372}{10.1093/nar/gkac372}]},
+
+  pmid = 35580057,
+  pmcid = {PMC9252763},
+  doi = {10.1093/nar/gkac372},
+}
+\end{lstlisting}
+
+Make sure to compile your LaTeX file with \texttt{pdflatex} and include the \texttt{hyperref} package in your preamble to enable clickable hyperlinks.
+
+\noindent Below is a complete example BibTeX entry as input:
+
+\begin{lstlisting}
+@Article{Magnus22,
+  author =       {Magnus, M.},
+  title =        {rna-tools.online: a Swiss army knife for {RNA 3D} structure modeling},
+  journal =      {NAR},
+  year =         2022,
+  volume =       50,
+  pages =        {W657--W662},
+
+  pmid = 35580057,
+  pmcid = {PMC9252763},
+  doi = {10.1093/nar/gkac372},
+}
+
+\end{lstlisting}
+
+\end{abstract}
+\section{Body of article}
+These are the reference citations \cite{Dirheimer94, Cruz09, RivasEddy17,Dirheimer94, Cruz09, RivasEddy17, VicensKieft22, Brown09, Gutell14, Smith10, Washietl05, Nawrocki09, Wheeler13b, Gao21, Rfam24, Rivas20b, Nawrocki13c, Wheeler13, RepearMasker, Rivas20, Henikoff92, Gao22, Sayers23, Camargo22, Magnus22, Steckelberg18, Das23, ZhangPyle22, Fitch1971}.
+Each number is clickable.
+\bibliography{paper_nar}
+\end{document}
